@@ -1,21 +1,18 @@
 import React, { useState,useEffect } from 'react';
-import {Text, SafeAreaView,StatusBar,View, Touchable, TouchableOpacity, Button} from 'react-native'
+import {Text, SafeAreaView,View,StyleSheet,TouchableOpacity} from 'react-native'
 import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 
 const App=()=> {
-  const [show,setShow]=useState(false)
-  const [count,setCount]=useState(0)
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("Started")
-      const url = 'https://meet.jit.si/park';
+  const joinHandler =  ()=>{
+    console.log("Starting meet****************************************************************************")
+    const url = 'https://meet.jit.si/park';
       const userInfo = {
         displayName: 'Kumar',
-        // email: 'user@example.com',
-        // avatar: 'https:/gravatar.com/avatar/abc123',
+        email: 'user@example.com',
+        avatar: 'https:/gravatar.com/avatar/abc123',
       };
       const options = {
-        audioMuted: true,
+        audioMuted: false,
         audioOnly: false,
         videoMuted: false,
         subject: "Sample Testing",
@@ -44,75 +41,54 @@ const App=()=> {
         toolboxEnabled: true,
         welcomePageEnabled: false,
       }
-      JitsiMeet.call(url, userInfo);
-      // , options, meetFeatureFlags
-      setShow(true)
-      /* Você também pode usar o JitsiMeet.audioCall (url) para chamadas apenas de áudio */
-      /* Você pode terminar programaticamente a chamada com JitsiMeet.endCall () */
-    }, 2000);
-    return () => {
-      console.log("End call")
-      JitsiMeet.endCall();
-    };
-  }, [])
-
-  // useEffect(() => {
-  //   return () => {
-  //     console.log("End call")
-  //     JitsiMeet.endCall();
-  //   };
-  // });
+      JitsiMeet.call(url, userInfo, options, meetFeatureFlags);
+      return ()=>{
+        JitsiMeet.endCall()
+      }
+  }
 
   const onConferenceTerminated=(nativeEvent)=> {
     /* Conference terminated event */
-    
-    console.log("Terminated","Joined*******************************************************************************",nativeEvent)
+    console.log("Terminated*******************************************************************************")
   }
 
   const onConferenceJoined=(nativeEvent) => {
     /* Conference joined event */
-
-    console.log("Joined*******************************************************************************",nativeEvent)
-    // StatusBar.setHidden(false, 'none')
-    //    StatusBar.setTranslucent(false)
-      //  StatusBar.setBackgroundColor('#000000')
-      //  StatusBar.setBarStyle('light-content')
-        setTimeout(()=>{
-          //  StatusBar.setHidden(false, 'none')
-          //  StatusBar.setTranslucent(true)
-          //  StatusBar.setBackgroundColor('#000000')
-          //  StatusBar.setBarStyle('light-content')
-        },100)
-    setShow(false);
-        setTimeout(()=>{
-           setShow(true)
-        },100)
-  }
-  const func=()=>{
-    // console.log("Pressed***************************************************")
-    setCount(count+1)
+    console.log("Joined*******************************************************************************")
   }
   const onConferenceWillJoin=(nativeEvent) =>{
     /* Conference will join event */
-    console.log("Will Join*****************************************************",nativeEvent)
+    console.log("Will Join*****************************************************")
   }
+  useEffect(()=>{
+    setTimeout(()=>{joinHandler()},2000)
+  },[])
   return (
-    <SafeAreaView style={{alignItems:'center'}}>
-    <View style={{backgroundColor:'violet',height:50,width:'100%', justifyContent:'center',alignItems:'center'}}>
-      <Text style={{textAlign:'center',color:'black'}}>Jitsi meet</Text>
-    </View>
+    <SafeAreaView >
     <JitsiMeetView
       onConferenceTerminated={e => onConferenceTerminated(e)}
       onConferenceJoined={e => onConferenceJoined(e)}
       onConferenceWillJoin={e => onConferenceWillJoin(e)}
-      style={{backgroundColor:'red',height:'80%',width:'100%' }}
+      style={{backgroundColor:'red',height:'100%',width:'100%' }}
     />
-    {/* <Button
-    onPress={func}  title={`${count}`}/> */}
-   
    </SafeAreaView>
   )
 }
+const styles = StyleSheet.create({
+  body: {
+    height: 600,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text:{
+    backgroundColor: 'white',
+    borderWidth: 1,
+    color:'black',
+    padding: 10,
+    textAlign: 'center',
+  }
+});
 export default App;
  
     

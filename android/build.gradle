@@ -32,8 +32,10 @@ allprojects {
 
         google()
         jcenter()
+
+              
         maven { // <---- Add this block
-            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+            url "https://github.com/aligol20/jitsi-meet-fixed-sdk/raw/master/releases"
         }
         maven { url 'https://www.jitpack.io' }
     }
