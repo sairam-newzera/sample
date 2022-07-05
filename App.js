@@ -5,18 +5,13 @@ import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 const App=()=> {
   const joinHandler =  ()=>{
     console.log("Starting meet****************************************************************************")
-    const url = 'https://meet.jit.si/park';
-      const userInfo = {
-        displayName: 'Kumar',
-        email: 'user@example.com',
-        avatar: 'https:/gravatar.com/avatar/abc123',
-      };
+    const url = 'https://meet.newzera.com/trident';
       const options = {
         audioMuted: false,
         audioOnly: false,
         videoMuted: false,
         subject: "Sample Testing",
-        // token: "your token"
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJuZXd6ZXJhIiwiaXNzIjoibmV3emVyYSIsInN1YiI6Im1lZXQubmV3emVyYS5jb20iLCJyb29tIjoiKiIsImlhdCI6MTY1NzAxNTgyMCwiZXhwIjoxNjU3MDE5NDIwLCJjb250ZXh0Ijp7InVzZXIiOnsibmFtZSI6InJvYmVydCIsImVtYWlsIjoicm9iZXJ0QGdtYWlsLmNvbSIsImF2YXRhciI6Imh0dHBzOi9ncmF2YXRhci5jb20vYXZhdGFyL2FiYzEyMyJ9fX0.cZneERmcYvRFS1vYwR0ZQAdy75kSWEW5dOiGcRvDUkM"
       }
       const meetFeatureFlags = {
         addPeopleEnabled: true,
@@ -41,24 +36,25 @@ const App=()=> {
         toolboxEnabled: true,
         welcomePageEnabled: false,
       }
-      JitsiMeet.call(url, userInfo, options, meetFeatureFlags);
+      JitsiMeet.call(url,{}, options, meetFeatureFlags);
       return ()=>{
         JitsiMeet.endCall()
       }
   }
 
   const onConferenceTerminated=(nativeEvent)=> {
+    setShowJitsi(false)
     /* Conference terminated event */
-    console.log("Terminated*******************************************************************************")
+    console.log("Terminated")
   }
 
   const onConferenceJoined=(nativeEvent) => {
     /* Conference joined event */
-    console.log("Joined*******************************************************************************")
+    console.log("Joined")
   }
   const onConferenceWillJoin=(nativeEvent) =>{
     /* Conference will join event */
-    console.log("Will Join*****************************************************")
+    console.log("Will Join")
   }
   useEffect(()=>{
     setTimeout(()=>{joinHandler()},2000)
